@@ -13,6 +13,10 @@ import org.cloudsimplus.builders.tables.CloudletsTableBuilder
 import collection.JavaConverters.*
 import collection.convert.ImplicitConversions.*
 
+
+/**
+ * This program simulates Platform as a Service where the customer has freedom over the virtual machines used to run their tasks.
+ */
 class PaaS {
 
 }
@@ -111,10 +115,16 @@ object PaaS extends App {
     logger.info(s"Charging customer ${totalCost}")
   }
   logger.info("Running PaaS model")
+  logger.info("\n\n\n\nSimulate tier 0 virtual machine with space shared cloudlet scheduling")
   PaaS.Start(0,"space")
+  logger.info("\n\n\n\nSimulate tier 1 virtual machine with space shared cloudlet scheduling")
   PaaS.Start(1,"space")
+  logger.info("\n\n\n\nSimulate tier 1 virtual machine with time shared cloudlet scheduling")
+
   PaaS.Start(1,"time")
+  logger.info("\n\n\n\nSimulate tier 2 virtual machine with space shared cloudlet scheduling")
   PaaS.Start(2,"space")
+  logger.info("\n\n\n\nSimulate tier 2 virtual machine with time shared cloudlet scheduling")
   PaaS.Start(2,"time")
-  logger.info("End of PaaS model")
+  logger.info("\n\n\n\nEnd of PaaS model")
 }

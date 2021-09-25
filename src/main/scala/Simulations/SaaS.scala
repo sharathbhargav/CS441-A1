@@ -22,6 +22,12 @@ import org.cloudsimplus.heuristics.CloudletToVmMappingSimulatedAnnealing
 
 import collection.JavaConverters.*
 import collection.convert.ImplicitConversions.*
+
+/**
+ * This program simulates Software as a Service. The customer can choose from 3 different tiers of service and
+ * will pay accordingly.
+ */
+
 class SaaS {
 }
 
@@ -59,11 +65,7 @@ object SaaS extends App {
 
   val CLOUD_LEN = config.getInt("serviceResources.cloudLet.length")
   val CLOUD_PE = config.getInt("serviceResources.cloudLet.PEs")
-  logger.info("Running SaaS model")
-  SaaS.Start(0)
-  SaaS.Start(1)
-  SaaS.Start(2)
-  logger.info("End of SaaS model")
+
   def Start(bin: Int) = {
     UtilityFunctions.configureLogs()
     val configHostPrefix = s"serviceResources.host${bin}"
@@ -88,6 +90,7 @@ object SaaS extends App {
     logger.info(s"HOST COUNT = ${config.getInt("saas.constant.numberOfHosts")}")
     val datacenter = Common.createDataCenter(simulation, HOST_COUNT, HOST_PE, HOST_MIPS, HOST_RAM, HOST_BW, HOST_STORAGE, VM_SCHEDULER,VM_ALLOCATION)
     Common.addCharacteristics(datacenter, COST_CPU, COST_MEM, COST_BW, COST_STORAGE)
+
     val broker0 = Common.createBroker(simulation,BROKER_FIT)
     val vmList = Common.createVMs(VM_COUNT,VM_MIPS,VM_PE,VM_RAM,VM_BW,VM_STORAGE,CLOUDLET_SCHEDULER)
     val cloudletList: List[CloudletSimple] = createCloudLets()
@@ -101,6 +104,8 @@ object SaaS extends App {
       (cloudlet.getId, cloudlet.getExecStartTime)
     }
     finishedCloudlet.sort(cloudletOrdering)
+
+    // Uncomment below line to print individual execution detail about the cloudlets
     //    new CloudletsTableBuilder(finishedCloudlet).build();
 
     Common.printCosts(broker0,logger)
@@ -117,14 +122,29 @@ object SaaS extends App {
     return cloudletList
   }
 
+  /**
+   * Calculates the cost that is presented to customers.
+   * @param broker
+   * @param bin
+   */
   def customCost(broker: DatacenterBroker,bin:Int)={
     val vm = broker.getVmCreatedList[Vm]().maxBy(vm => vm.getTotalExecutionTime())
     val execTime = vm.getTotalExecutionTime
+    // base price is the cost of memory, storage and bandwidth combined times number of virtual machines.
     val totalCost = bin match {
       case 0 => BASE_PRICE_0 + execTime*BIN0_COST
       case 1 => BASE_PRICE_1 + execTime * BIN1_COST
       case 2 => BASE_PRICE_2 + execTime * BIN2_COST
     }
-    logger.info(s"Charging customer ${totalCost}")
+    logger.info(s"Charging customer ${totalCost} cost units" )
   }
+
+  logger.info("Running SaaS model")
+  logger.info("\n\n\n\nSimulating tier 1: 1 cloudlet/sec service")
+  SaaS.Start(0)
+  logger.info("\n\n\n\nSimulating tier 2: 2 cloudlet/sec service")
+  SaaS.Start(1)
+  logger.info("\n\n\n\nSimulating tier 3: 4 cloudlet/sec service")
+  SaaS.Start(2)
+  logger.info("\n\n\n\nEnd of SaaS model")
 }

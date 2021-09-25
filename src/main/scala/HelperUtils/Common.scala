@@ -106,8 +106,8 @@ object Common {
       totalExecutionTime = totalExecutionTime+ cost.getVm.getTotalExecutionTime
       totalNonIdleVms = totalNonIdleVms + (if (vm.getTotalExecutionTime > 0) 1 else 0)
     })
-    logger.info(s"Total execution time = ${totalExecutionTime}")
-    logger.info(s"Total cost = ${totalCost}")
+    logger.info(s"Total execution time = ${totalExecutionTime} seconds")
+    logger.info(s"Total cost = ${totalCost} cost units")
     //    logger.info(s"Total non idle vms = ${totalNonIdleVms}")
     //    logger.info(s"Total processing cost = ${processingTotalCost}")
     //    logger.info(s"Total memory cost = ${memoryTotaCost}")

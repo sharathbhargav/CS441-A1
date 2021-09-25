@@ -37,6 +37,7 @@ object BasicExample1 extends App {
   val INIT_UTILIZATION_RATIO = config.getDouble("basicExample1.initUtilizationRation")
   val MAX_UTILIZATION_RATIO = config.getDouble("basicExample1.maxUtilizationRatio")
 
+  // The number of simulation clock units after which the simulation has to be stopped
   val SIM_TIME = config.getDouble("basicExample1.simulationTime")
   val DATACENTERS_COUNT = config.getInt("basicExample1.numberOfDataCenters")
   val HOST_COUNT = config.getInt("basicExample1.numberOfHosts")
@@ -81,12 +82,16 @@ object BasicExample1 extends App {
     val broker0 = createBroker(simulation)
     val vmList = createVMs()
     val cloudletList: List[CloudletSimple] = createCloudLets()
+    
+    // this allows the simulation to keep running despite no cloudlets being submitted. The simulation will wait for more cloudlets
     simulation.terminateAt(SIM_TIME)
     broker0.submitVmList(vmList.asJava)
     broker0.submitCloudletList(cloudletList.asJava)
     simulation.start()
 
     val finishedCloudlet = broker0.getCloudletFinishedList();
+    
+    // Order the cloudlets to be printed by their ID and then by start time
     val cloudletOrdering = Ordering.by { (cloudlet: Cloudlet) =>
       (cloudlet.getId, cloudlet.getExecStartTime)
     }
@@ -187,12 +192,12 @@ object BasicExample1 extends App {
       totalExecutionTime = totalExecutionTime + cost.getVm.getTotalExecutionTime
       totalNonIdleVms = totalNonIdleVms + (if (vm.getTotalExecutionTime > 0) 1 else 0)
     })
-    logger.info(s"Total execution time = ${totalExecutionTime}")
-    logger.info(s"Total cost = ${totalCost}")
+    logger.info(s"Total execution time = ${totalExecutionTime} seconds")
+    logger.info(s"Total cost = ${totalCost} cost units")
     logger.info(s"Total non idle vms = ${totalNonIdleVms}")
-    logger.info(s"Total processing cost = ${processingTotalCost}")
-    logger.info(s"Total memory cost = ${memoryTotaCost}")
-    logger.info(s"Total BW cost = ${bwTotalCost}")
-    logger.info(s"Total storage cost = ${storageTotalCost}")
+    logger.info(s"Total processing cost = ${processingTotalCost} cost units")
+    logger.info(s"Total memory cost = ${memoryTotaCost} cost units")
+    logger.info(s"Total BW cost = ${bwTotalCost} cost units")
+    logger.info(s"Total storage cost = ${storageTotalCost} cost units")
   }
 }

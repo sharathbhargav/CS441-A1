@@ -1,3 +1,33 @@
+# Sharath S Bhargav - HW 1 CS 441
+## University of Illinois at Chicago
+
+### Introduction
+This repo contains simulations of various cloud architectures. The simulation code has been written in Scala and can be compiled using SBT.
+
+
+
+## Installation instructions
+This section contains the instructions on how to run the simulations implemented as part of this homework, the recommended procedure is to use IntellJ IDEA with the Scala plugin installed.
+
+1. Open IntellJ IDEA, a welcome screen will be shown, select “Check out from Version Control” and then “Git”.
+2. Enter the following URL and click “Clone”: https://github.com/sharathbhargav/CS441-A1.git
+3. When prompted confirm with “Yes”
+4. The SBT import screen will appear, proceed with the default options and confirm with “OK”
+5. Confirm overwriting with “Yes”
+6. You may now go to src/main/scala/Simulations/ and run the examples from there. A run configuration is automatically created when you click the green arrow next to the main method of the example you wish to run.
+
+
+#### Alternative: SBT from CLI
+
+If you don’t want to use an IDE, you may run this project from the command line (CLI), proceed as follows:
+
+1. Type: git clone https://github.com/sharathbhargav/CS441-A1.git
+2. Before running the actual code, you may wish to run tests with “sbt clean compile test”
+3. Run the code: sbt clean compile run
+
+Further details about the project can be found in Descript.md file in doc folder.
+
+
 # Homework 1
 ### Create cloud simulators in Scala for evaluating executions of applications in cloud datacenters with different characteristics and deployment models.
 ### Grade: 8%

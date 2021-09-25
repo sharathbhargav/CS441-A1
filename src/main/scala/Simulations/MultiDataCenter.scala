@@ -30,6 +30,12 @@ import scala.util.Random
 import collection.JavaConverters.*
 import collection.convert.ImplicitConversions.*
 
+/**
+ * This program simulates creation of multiple datacenters across different time zones. 
+ * It also simulates creation of a network topology by creating links between each datacenter and broker.
+ * Edge switches are created within each datacenter to connect the hosts.
+ */
+
 class MultiDataCenter {
 }
 
@@ -103,6 +109,11 @@ object MultiDataCenter  extends App{
     printCosts(broker0)
   }
 
+  /**
+   * Creates broker depending on the BROKER_FIT configuration parameter. 
+   * @param sim
+   * @return DatacenterBroker
+   */
   def createBroker(sim: CloudSim): DatacenterBroker = {
     val broker = BROKER_FIT match {
       case "simple" => new DatacenterBrokerSimple(sim)
@@ -300,13 +311,13 @@ object MultiDataCenter  extends App{
       totalExecutionTime = totalExecutionTime+ cost.getVm.getTotalExecutionTime
       totalNonIdleVms = totalNonIdleVms + (if (vm.getTotalExecutionTime > 0) 1 else 0)
     })
-    logger.info(s"Total execution time = ${totalExecutionTime}")
-    logger.info(s"Total cost = ${totalCost}")
-    logger.info(s"Total non idle vms = ${totalNonIdleVms}")
-    logger.info(s"Total processing cost = ${processingTotalCost}")
-    logger.info(s"Total memory cost = ${memoryTotaCost}")
-    logger.info(s"Total BW cost = ${bwTotalCost}")
-    logger.info(s"Total storage cost = ${storageTotalCost}")
+    logger.info(s"Total execution time = ${totalExecutionTime} seconds")
+    logger.info(s"Total cost = ${totalCost} cost units")
+    logger.info(s"Total non idle vms = ${totalNonIdleVms} cost units")
+    logger.info(s"Total processing cost = ${processingTotalCost} cost units")
+    logger.info(s"Total memory cost = ${memoryTotaCost} cost units")
+    logger.info(s"Total BW cost = ${bwTotalCost} cost units")
+    logger.info(s"Total storage cost = ${storageTotalCost} cost units")
   }
 
 }
