@@ -103,6 +103,7 @@ different configuration. It has to be noted that a virtual machine having a high
 host. The hosts and virtual machines are numbered 0,1,2 in the increasing order of their configuration.
 For this architecture the costs are decided on per cpu processing second, per megabyte of memory, storage and per megabits/second of bandwidth
 
+
 ####Configuration of host available to users
 Bin 0: 16 processing units, 16000 MIps, Memory of 16000 MB, Storage 30000 MB, Bndwidth of 30000 MBps
 Bin 1: 32 processing units, 32000 MIps, Memory of 32000 MB, Storage 30000 MB, Bndwidth of 30000 MBps
@@ -137,3 +138,7 @@ In this scheduling technique all the cloudlets will not be executed due to how t
 is terminated once number of cloudlets executed becomes equal to number of VMs when large number of cloudlets are submitted.
 Hence none of the simulations shown use LinuxFair scheduling technique.
 
+###Limitations
+The customer cannot pick different number of vms of different tiers. This is a requirement in the real world and will take 
+a little bit of time to implement in these simulations. Due to time constraints this feature was not implemented.
+Custom strategy to assign cloudlets and VMs could be designed to overcome the shortcomings of space and time shared scheduling.
