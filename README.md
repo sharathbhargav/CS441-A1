@@ -6,6 +6,7 @@ This repo contains simulations of various cloud architectures. The simulation co
 
 
 
+
 ## Installation instructions
 This section contains the instructions on how to run the simulations implemented as part of this homework, the recommended procedure is to use IntellJ IDEA with the Scala plugin installed.
 
